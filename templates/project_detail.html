@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ project.title }} — WWEC Projects</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/tw-config.js"></script>
+  <link rel="stylesheet" href="/style.css" />
+  <style>
+    .ba-stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      border-radius: 0.75rem;
+      user-select: none;
+      touch-action: none;
+      background-color: #020617;
+    }
+    .ba-stage img.ba-base,
+    .ba-after-clip img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+    }
+    .ba-after-clip {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+    }
+    .ba-divider {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 2px;
+      background: #fbbf24;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.65);
+      pointer-events: none;
+      z-index: 10;
+    }
+    .ba-handle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 38px;
+      height: 38px;
+      border-radius: 9999px;
+      background: #fbbf24;
+      color: #020617;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+      pointer-events: none;
+      z-index: 11;
+    }
+    .ba-range {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: ew-resize;
+      margin: 0;
+      z-index: 12;
+    }
+    .ba-fallback-msg {
+      position: absolute;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #94a3b8;
+      background: rgba(2, 6, 23, 0.85);
+      pointer-events: none;
+    }
+    .ba-fallback-msg.is-visible {
+      display: flex;
+    }
+    .photo-error-badge {
+      display: none;
+    }
+    .photo-card.is-broken .photo-error-badge {
+      display: flex;
+    }
+    .photo-card.is-broken img {
+      opacity: 0.15;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100">
+  <!-- Header -->
+  <header class="sticky top-0 z-30 border-b border-slate-800 bg-slate-900/95 backdrop-blur">
+    <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-3.5">
+      <div class="flex items-center gap-3">
+        <a href="/" class="flex items-center gap-3">
+          <img src="/pictures/logo.png" alt="WWEC Logo" class="h-10 w-auto object-contain" onerror="this.style.display='none'" />
+          <div>
+            <span class="block font-display text-base font-bold text-amber-400">World Wide Engineering &amp; Constructions</span>
+            <span class="block text-xs text-slate-400">Project Showcase &amp; Media</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="flex items-center gap-2.5">
+        <a href="/#gallery" class="rounded-lg border border-slate-700 bg-slate-800/80 px-3.5 py-1.5 text-sm font-medium text-slate-200 hover:border-amber-400 hover:text-amber-300">
+          &larr; All Projects
+        </a>
+        <a href="/#contact" class="rounded-lg bg-amber-400 px-3.5 py-1.5 text-sm font-semibold text-slate-950 hover:bg-amber-300">
+          Request Quote
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-4 py-8 space-y-10">
+    <!-- Project Hero Summary -->
+    <section class="rounded-2xl border border-slate-800 bg-slate-900 p-6 md:p-8">
+      <div class="flex flex-wrap items-center gap-3 mb-3">
+        <span class="rounded-full bg-sky-950/90 border border-sky-800/70 px-3 py-1 text-xs font-medium text-sky-300">
+          {{ categories.get(project.category, project.category) }}
+        </span>
+        {% if project.created_at %}
+          <span class="text-xs text-slate-400">Added {{ project.created_at }}</span>
+        {% endif %}
+      </div>
+
+      <h1 class="font-display text-2xl font-bold text-white sm:text-3xl">{{ project.title }}</h1>
+
+      {% if project.description %}
+        <p class="mt-3 max-w-3xl text-sm leading-relaxed text-slate-300 sm:text-base">{{ project.description }}</p>
+      {% endif %}
+
+      <div class="mt-6 flex flex-wrap gap-3 text-xs">
+        <span class="rounded-lg border border-slate-800 bg-slate-950 px-3 py-1.5 text-slate-300">
+          <strong class="text-amber-400">{{ photos|length }}</strong> Photo(s)
+        </span>
+        <span class="rounded-lg border border-slate-800 bg-slate-950 px-3 py-1.5 text-slate-300">
+          <strong class="text-sky-300">{{ videos|length }}</strong> Video(s)
+        </span>
+        <span class="rounded-lg border border-slate-800 bg-slate-950 px-3 py-1.5 text-slate-300">
+          <strong class="text-emerald-300">{{ before_after|length }}</strong> Before / After Pair(s)
+        </span>
+      </div>
+    </section>
+
+    <!-- Before & After Comparison Section -->
+    {% if before_after %}
+      <section class="space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="font-display text-xl font-bold text-white">Before &amp; After Transformations</h2>
+            <p class="text-xs text-slate-400 sm:text-sm">Drag the slider left or right to compare site progress and final results.</p>
+          </div>
+        </div>
+
+        <div class="grid gap-6 lg:grid-cols-2">
+          {% for pair in before_after %}
+            <article class="rounded-2xl border border-slate-800 bg-slate-900 p-4 space-y-3">
+              <div class="flex items-center justify-between text-xs font-medium">
+                <span class="rounded bg-slate-800 px-2.5 py-1 text-slate-300">Before</span>
+                <span class="text-slate-400">Slide to compare</span>
+                <span class="rounded bg-amber-400/15 border border-amber-400/40 px-2.5 py-1 text-amber-300">After</span>
+              </div>
+
+              <div class="ba-stage" data-ba-card>
+                <img
+                  src="{{ pair.after_url or '' }}"
+                  alt="{{ pair.caption or 'After' }}"
+                  class="ba-base"
+                  data-ba-after-img
+                />
+                <div class="ba-after-clip" data-ba-clip style="width: 50%;">
+                  <img
+                    src="{{ pair.before_url or '' }}"
+                    alt="{{ pair.caption or 'Before' }}"
+                    data-ba-before-img
+                    style="width: 100%; height: 100%;"
+                  />
+                </div>
+                <div class="ba-fallback-msg" data-ba-fallback>
+                  Before/After image could not be loaded. Check the image URLs or Drive sharing permissions.
+                </div>
+                <div class="ba-divider" data-ba-divider style="left: 50%;"></div>
+                <div class="ba-handle" data-ba-handle style="left: 50%;">&harr;</div>
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  value="50"
+                  aria-label="Before and after comparison slider"
+                  class="ba-range"
+                  data-ba-slider
+                />
+              </div>
+
+              {% if pair.caption %}
+                <p class="text-sm text-slate-300">{{ pair.caption }}</p>
+              {% endif %}
+            </article>
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
+
+    <!-- Videos Section -->
+    {% if videos %}
+      <section class="space-y-4">
+        <div>
+          <h2 class="font-display text-xl font-bold text-white">Project Videos</h2>
+          <p class="text-xs text-slate-400 sm:text-sm">Site walkthroughs, construction milestones, and video updates.</p>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-2">
+          {% for vid in videos %}
+            <article class="rounded-2xl border border-slate-800 bg-slate-900 p-4 space-y-3">
+              {% if vid.embed_url %}
+                <div class="aspect-video w-full overflow-hidden rounded-xl bg-slate-950 border border-slate-800">
+                  <iframe
+                    src="{{ vid.embed_url }}"
+                    title="{{ vid.caption or project.title }}"
+                    class="h-full w-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+              {% else %}
+                <video
+                  src="{{ vid.url }}"
+                  controls
+                  preload="metadata"
+                  class="aspect-video w-full rounded-xl bg-slate-950 border border-slate-800 object-cover"
+                ></video>
+              {% endif %}
+
+              <div class="flex items-center justify-between gap-2">
+                <p class="text-sm font-medium text-slate-200">{{ vid.caption or 'Project Video' }}</p>
+                <a href="{{ vid.url }}" target="_blank" rel="noopener noreferrer" class="text-xs text-sky-300 hover:underline shrink-0">
+                  Open link &nearr;
+                </a>
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
+
+    <!-- Photos Section -->
+    <section class="space-y-4">
+      <div>
+        <h2 class="font-display text-xl font-bold text-white">Project Photos</h2>
+        <p class="text-xs text-slate-400 sm:text-sm">Click any photo to view it full screen.</p>
+      </div>
+
+      {% if photos %}
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {% for photo in photos %}
+            <button
+              type="button"
+              data-photo-card
+              data-lightbox-src="{{ photo.url or '' }}"
+              data-lightbox-caption="{{ photo.caption or project.title }}"
+              class="photo-card group relative text-left rounded-2xl border border-slate-800 bg-slate-900 p-2.5 transition hover:border-amber-400/70"
+            >
+              <div class="relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-slate-950">
+                <img
+                  src="{{ photo.url or '' }}"
+                  alt="{{ photo.caption or project.title }}"
+                  data-photo-img
+                  class="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                />
+                <div class="photo-error-badge absolute inset-0 flex-col items-center justify-center p-3 text-center">
+                  <span class="rounded bg-rose-950/90 border border-rose-800/60 px-2.5 py-1 text-xs font-medium text-rose-200">
+                    Photo failed to load
+                  </span>
+                </div>
+              </div>
+              {% if photo.caption %}
+                <p class="mt-2.5 px-1 text-xs text-slate-300">{{ photo.caption }}</p>
+              {% endif %}
+            </button>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="rounded-2xl border border-slate-800 bg-slate-900 p-6 text-sm text-slate-400">
+          No standard photos attached to this project.
+        </div>
+      {% endif %}
+    </section>
+  </main>
+
+  <!-- Lightbox Modal -->
+  <div id="lightboxModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/90 p-4 backdrop-blur-sm">
+    <div class="relative max-w-5xl w-full rounded-2xl border border-slate-800 bg-slate-900 p-4">
+      <div class="flex items-center justify-between gap-4 pb-3">
+        <p id="lightboxCaption" class="text-sm font-medium text-slate-200"></p>
+        <button id="lightboxClose" type="button" class="rounded-lg bg-slate-800 px-3 py-1 text-sm text-slate-200 hover:bg-rose-900 hover:text-white">
+          Close &times;
+        </button>
+      </div>
+      <div class="max-h-[78vh] overflow-hidden rounded-xl bg-slate-950 flex items-center justify-center">
+        <img id="lightboxImg" src="" alt="" class="max-h-[76vh] w-auto max-w-full object-contain" />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Photo error indicators (without hiding cards)
+    document.querySelectorAll("[data-photo-card]").forEach((card) => {
+      const img = card.querySelector("[data-photo-img]");
+      if (!img) return;
+      const markBroken = () => card.classList.add("is-broken");
+      if (!img.getAttribute("src")) {
+        markBroken();
+      } else if (img.complete && img.naturalWidth === 0) {
+        markBroken();
+      } else {
+        img.addEventListener("error", markBroken);
+      }
+    });
+
+    // Before / After Slider Logic
+    document.querySelectorAll("[data-ba-card]").forEach((card) => {
+      const slider = card.querySelector("[data-ba-slider]");
+      const clip = card.querySelector("[data-ba-clip]");
+      const divider = card.querySelector("[data-ba-divider]");
+      const handle = card.querySelector("[data-ba-handle]");
+      const beforeImg = card.querySelector("[data-ba-before-img]");
+      const afterImg = card.querySelector("[data-ba-after-img]");
+      const fallback = card.querySelector("[data-ba-fallback]");
+
+      let beforeFailed = !beforeImg || !beforeImg.getAttribute("src");
+      let afterFailed = !afterImg || !afterImg.getAttribute("src");
+
+      const updateFallbackState = () => {
+        if (!fallback) return;
+        if (beforeFailed && afterFailed) {
+          fallback.classList.add("is-visible");
+        } else {
+          fallback.classList.remove("is-visible");
+        }
+      };
+
+      if (beforeImg) {
+        if (!beforeImg.getAttribute("src") || (beforeImg.complete && beforeImg.naturalWidth === 0)) {
+          beforeFailed = true;
+        }
+        beforeImg.addEventListener("error", () => {
+          beforeFailed = true;
+          updateFallbackState();
+        });
+        beforeImg.addEventListener("load", () => {
+          beforeFailed = false;
+          updateFallbackState();
+        });
+      }
+
+      if (afterImg) {
+        if (!afterImg.getAttribute("src") || (afterImg.complete && afterImg.naturalWidth === 0)) {
+          afterFailed = true;
+        }
+        afterImg.addEventListener("error", () => {
+          afterFailed = true;
+          updateFallbackState();
+        });
+        afterImg.addEventListener("load", () => {
+          afterFailed = false;
+          updateFallbackState();
+        });
+      }
+
+      updateFallbackState();
+
+      const syncWidth = () => {
+        if (beforeImg) {
+          beforeImg.style.width = `${card.clientWidth}px`;
+          beforeImg.style.height = `${card.clientHeight}px`;
+          beforeImg.style.maxWidth = "none";
+        }
+      };
+
+      const updatePos = (val) => {
+        const pct = Math.max(0, Math.min(100, Number(val) || 50));
+        if (clip) clip.style.width = `${pct}%`;
+        if (divider) divider.style.left = `${pct}%`;
+        if (handle) handle.style.left = `${pct}%`;
+        if (slider && Number(slider.value) !== pct) slider.value = String(pct);
+      };
+
+      syncWidth();
+      updatePos(slider ? slider.value : 50);
+      window.addEventListener("resize", syncWidth);
+
+      slider?.addEventListener("input", (e) => updatePos(e.target.value));
+
+      let dragging = false;
+      const setFromClientX = (clientX) => {
+        const rect = card.getBoundingClientRect();
+        if (!rect.width) return;
+        const pct = ((clientX - rect.left) / rect.width) * 100;
+        updatePos(pct);
+      };
+
+      card.addEventListener("pointerdown", (e) => {
+        dragging = true;
+        card.setPointerCapture?.(e.pointerId);
+        setFromClientX(e.clientX);
+      });
+
+      card.addEventListener("pointermove", (e) => {
+        if (!dragging) return;
+        setFromClientX(e.clientX);
+      });
+
+      const stopDrag = (e) => {
+        if (!dragging) return;
+        dragging = false;
+        if (e?.pointerId !== undefined) {
+          card.releasePointerCapture?.(e.pointerId);
+        }
+      };
+
+      card.addEventListener("pointerup", stopDrag);
+      card.addEventListener("pointercancel", stopDrag);
+    });
+
+    // Lightbox Logic
+    const modal = document.getElementById("lightboxModal");
+    const lbImg = document.getElementById("lightboxImg");
+    const lbCap = document.getElementById("lightboxCaption");
+    const lbClose = document.getElementById("lightboxClose");
+
+    document.querySelectorAll("[data-lightbox-src]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        lbImg.src = btn.getAttribute("data-lightbox-src") || "";
+        lbCap.textContent = btn.getAttribute("data-lightbox-caption") || "";
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      });
+    });
+
+    const closeModal = () => {
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+      lbImg.src = "";
+    };
+
+    lbClose?.addEventListener("click", closeModal);
+    modal?.addEventListener("click", (e) => {
+      if (e.target === modal) closeModal();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeModal();
+    });
+  </script>
+</body>
+</html>

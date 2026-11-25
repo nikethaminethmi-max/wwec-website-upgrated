@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Gallery | World Wide Engineering &amp; Constructions</title>
+<meta name="description" content="WWEC project showcase.">
+<script>
+  try {
+    const t = localStorage.getItem('color-theme');
+    if (t === 'dark' || (!t && matchMedia('(prefers-color-scheme: dark)').matches)) document.documentElement.classList.add('dark');
+    document.documentElement.classList.add('js');
+  } catch (e) {}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="tw-config.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+  #progress { position: fixed; inset: 0 0 auto 0; height: 3px; z-index: 60; transform-origin: left; transform: scaleX(0);
+              background: linear-gradient(90deg, #fbbf24, #f59e0b, #60a5fa); }
+
+  /* Hero headline: words rise out of a mask */
+  .word { display: inline-block; overflow: hidden; vertical-align: bottom; }
+  .word > span { display: inline-block; transform: translateY(110%); animation: rise .9s cubic-bezier(.16,1,.3,1) forwards; animation-delay: calc(var(--i) * 90ms + 200ms); }
+  @keyframes rise { to { transform: none; } }
+  .intro { opacity: 0; transform: translateY(18px); animation: intro .9s cubic-bezier(.16,1,.3,1) forwards; animation-delay: var(--d, 0ms); }
+  @keyframes intro { to { opacity: 1; transform: none; } }
+
+  .orb { position: absolute; border-radius: 9999px; filter: blur(64px); pointer-events: none; animation: drift 14s ease-in-out infinite alternate; }
+  @keyframes drift { to { transform: translate(40px, -30px) scale(1.15); } }
+  .float-a { animation: floaty 6s ease-in-out infinite; }
+  @keyframes floaty { 50% { transform: translateY(-10px); } }
+
+  .shine { position: relative; overflow: hidden; }
+  .shine::after { content: ""; position: absolute; inset: 0; transform: translateX(-120%) skewX(-20deg);
+                  background: linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent); animation: shine 3.5s ease-in-out infinite; }
+  @keyframes shine { 60%, 100% { transform: translateX(120%) skewX(-20deg); } }
+
+  /* Scroll reveal */
+  .reveal { opacity: 0; transform: translateY(32px); transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); transition-delay: var(--d, 0ms); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .word > span, .intro, .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+
+<body class="font-sans bg-bg text-ink antialiased">
+<div id="progress"></div>
+
+<!-- ====================== HEADER ====================== -->
+<header class="sticky top-0 z-50 px-3 sm:px-5 pt-3">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 !px-0">
+    <div class="bg-surface border border-line rounded-full shadow-lg pl-4 pr-2 h-16 flex items-center justify-between gap-3">
+      <a href="index.html" class="flex items-center gap-2.5" aria-label="WWEC home">
+        <img src="pictures/logo.png" alt="WWEC logo" class="h-9 w-auto object-contain" onerror="this.style.display='none'">
+        <span class="font-display font-bold text-lg tracking-tight hidden sm:inline">WWEC</span>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-1" aria-label="Main">
+        <a href="index.html" class="px-4 py-2 rounded-full text-sm font-medium transition text-muted hover:text-ink">Home</a>
+        <a href="about.html" class="px-4 py-2 rounded-full text-sm font-medium transition text-muted hover:text-ink">About</a>
+        <div class="relative group">
+          <a href="building-solutions.html" class="px-4 py-2 rounded-full text-sm font-medium transition text-muted hover:text-ink inline-flex items-center gap-1">Services <span class="text-[10px]">▾</span></a>
+          <div class="absolute left-0 top-full pt-3 hidden group-hover:block group-focus-within:block">
+            <div class="w-60 bg-surface border border-line rounded-2xl shadow-xl p-2">
+              <a href="building-solutions.html" class="block px-4 py-2.5 rounded-xl text-sm text-muted hover:bg-mint hover:text-ink transition">Building Solutions</a>
+              <a href="manufacturing.html" class="block px-4 py-2.5 rounded-xl text-sm text-muted hover:bg-mint hover:text-ink transition">Manufacturing</a>
+              <a href="professional-services.html" class="block px-4 py-2.5 rounded-xl text-sm text-muted hover:bg-mint hover:text-ink transition">Professional Services</a>
+              <a href="development-support.html" class="block px-4 py-2.5 rounded-xl text-sm text-muted hover:bg-mint hover:text-ink transition">Development &amp; Support</a>
+              <a href="engineering-solutions.html" class="block px-4 py-2.5 rounded-xl text-sm text-muted hover:bg-mint hover:text-ink transition">Engineering Solutions</a>
+            </div>
+          </div>
+        </div>
+        <a href="constructions.html" class="px-4 py-2 rounded-full text-sm font-medium transition text-muted hover:text-ink">Constructions</a>
+        <a href="apartments.html" class="px-4 py-2 rounded-full text-sm font-medium transition text-muted hover:text-ink">Developments</a>
+        <div class="relative group">
+          <a href="gallery.html" class="px-4 py-2 rounded-full text-sm font-medium transition bg-deep text-white inline-flex items-center gap-1" aria-current="page">Gallery <span class="text-[10px]">▾</span></a>
+          <div class="absolute left-0 top-full pt-3 hidden group-hover:block group-focus-within:block">
+            <div class="w-60 bg-surface border border-line rounded-2xl shadow-xl p-2">
+              <a href="gallery.html?filter=architectural" class="block px-4 py-2.5 rounded-xl text-sm text-muted hover:bg-mint hover:text-ink transition">Architectural Design</a>
+              <a href="gallery.html?filter=ongoing" class="block px-4 py-2.5 rounded-xl text-sm text-muted hover:bg-mint hover:text-ink transition">Ongoing Projects</a>
+              <a href="gallery.html?filter=completed" class="block px-4 py-2.5 rounded-xl text-sm text-muted hover:bg-mint hover:text-ink transition">Completed Projects</a>
+              <a href="gallery.html?filter=special" class="block px-4 py-2.5 rounded-xl text-sm text-muted hover:bg-mint hover:text-ink transition">Special Development</a>
+            </div>
+          </div>
+        </div>
+        <a href="contact.html" class="px-4 py-2 rounded-full text-sm font-medium transition text-muted hover:text-ink">Contact</a>
+      </nav>
+
+      <div class="flex items-center gap-2">
+        <button id="theme-toggle" type="button" aria-label="Toggle dark mode" class="w-10 h-10 rounded-full border border-line flex items-center justify-center text-ink hover:border-accent transition">
+          <svg class="icon-moon w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
+          <svg class="icon-sun w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/></svg>
+        </button>
+        <a href="contact.html" class="hidden sm:inline-flex bg-accent hover:bg-accentDark text-onaccent font-semibold text-sm px-5 h-10 items-center rounded-full transition">Get a Quote</a>
+        <button id="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" class="lg:hidden w-10 h-10 rounded-full border border-line flex items-center justify-center">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-menu" class="hidden lg:hidden mt-2 bg-surface border border-line rounded-3xl shadow-xl px-6 py-4">
+      <a href="index.html" class="block py-2.5 text-sm font-medium text-ink">Home</a>
+      <a href="about.html" class="block py-2.5 text-sm font-medium text-ink">About</a>
+      <a href="constructions.html" class="block py-2.5 text-sm font-medium text-ink">Constructions</a>
+      <a href="apartments.html" class="block py-2.5 text-sm font-medium text-ink">Developments</a>
+      <p class="pt-3 pb-1 text-[11px] uppercase tracking-widest text-muted">Gallery Categories</p>
+      <a href="gallery.html?filter=architectural" class="block py-2 text-sm text-muted">Architectural Design</a>
+      <a href="gallery.html?filter=ongoing" class="block py-2 text-sm text-muted">Ongoing Projects</a>
+      <a href="gallery.html?filter=completed" class="block py-2 text-sm text-muted">Completed Projects</a>
+      <a href="gallery.html?filter=special" class="block py-2 text-sm text-muted">Special Development</a>
+      <p class="pt-3 pb-1 text-[11px] uppercase tracking-widest text-muted">Services</p>
+      <a href="building-solutions.html" class="block py-2 text-sm text-muted">Building Solutions</a>
+      <a href="manufacturing.html" class="block py-2 text-sm text-muted">Manufacturing</a>
+      <a href="professional-services.html" class="block py-2 text-sm text-muted">Professional Services</a>
+      <a href="development-support.html" class="block py-2 text-sm text-muted">Development &amp; Support</a>
+      <a href="engineering-solutions.html" class="block py-2 text-sm text-muted">Engineering Solutions</a>
+      <a href="contact.html" class="mt-3 mb-1 w-full inline-flex items-center justify-center bg-accent hover:bg-accentDark text-onaccent font-semibold text-sm px-6 py-3.5 rounded-full transition">Get a Quote</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ====================== HERO ====================== -->
+<section class="max-w-7xl mx-auto px-5 sm:px-8 pt-8">
+  <div class="relative overflow-hidden rounded-[2.5rem] bg-deep text-white shadow-2xl p-8 md:p-14 lg:p-16">
+    <div class="orb -right-24 -top-24 w-96 h-96 bg-amber-500/25"></div>
+    <div class="orb -left-24 -bottom-24 w-96 h-96 bg-blue-500/25" style="animation-delay:-6s"></div>
+    <div class="orb left-1/3 top-1/3 w-80 h-80 bg-emerald-500/10" style="animation-delay:-3s"></div>
+
+    <div class="relative z-10 grid lg:grid-cols-12 gap-12 items-center">
+      <div class="lg:col-span-7 space-y-6">
+        <nav aria-label="Breadcrumb" class="intro inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-md text-xs text-white/90 font-medium">
+          <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+          <a href="index.html" class="hover:text-amber-300 transition">Home</a><span>/</span><span class="text-amber-300">Project Gallery</span>
+        </nav>
+
+        <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight" aria-label="Ideas in Design. Progress in Action. Excellence in Every Detail.">
+          <span class="word" aria-hidden="true"><span style="--i:0">Ideas</span></span>
+          <span class="word" aria-hidden="true"><span style="--i:1">in</span></span>
+          <span class="word" aria-hidden="true"><span style="--i:2">Design.</span></span>
+          <span class="word" aria-hidden="true"><span style="--i:3">Progress</span></span>
+          <span class="word" aria-hidden="true"><span style="--i:4">in</span></span>
+          <span class="word" aria-hidden="true"><span style="--i:5">Action.</span></span><br>
+          <span class="word" aria-hidden="true"><span style="--i:6" class="text-amber-400">Excellence</span></span>
+          <span class="word" aria-hidden="true"><span style="--i:7" class="text-amber-400">in</span></span>
+          <span class="word" aria-hidden="true"><span style="--i:8">Every</span></span>
+          <span class="word" aria-hidden="true"><span style="--i:9">Detail.</span></span>
+        </h1>
+
+        <p class="intro text-white/75 text-base sm:text-lg leading-relaxed max-w-xl" style="--d:900ms">
+          A look at architectural concepts, ongoing builds, completed projects and special developments across Sri Lanka.
+        </p>
+        <div class="intro flex flex-wrap gap-4 pt-2" style="--d:1050ms">
+          <a href="#showcase" class="shine bg-amber-400 hover:bg-amber-500 text-slate-950 font-bold text-sm px-7 py-3.5 rounded-full transition shadow-lg hover:scale-105 duration-300">Browse Projects ↓</a>
+          <a href="contact.html" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-sm px-7 py-3.5 rounded-full transition backdrop-blur-md">Contact Us</a>
+        </div>
+      </div>
+
+      <div class="intro lg:col-span-5 relative" style="--d:400ms" id="tilt-wrap">
+        <div id="tilt" class="relative mx-auto max-w-md lg:max-w-none" style="transition:transform .25s ease-out">
+          <div class="float-a overflow-hidden rounded-[2rem] shadow-2xl border-4 border-white/10 aspect-[4/3] rotate-2">
+            <img src="pictures/gallery.jpg" alt="Architecture" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== PROJECT SHOWCASE ====================== -->
+<section id="showcase" class="max-w-7xl mx-auto px-5 sm:px-8 mt-24 reveal">
+  <div class="text-center mb-12">
+    <div class="inline-block bg-accent/10 text-accent text-xs font-bold tracking-[0.2em] uppercase px-4 py-1.5 rounded-full mb-3">Portfolio Showcase</div>
+    <h2 class="font-display text-3xl md:text-5xl font-bold mb-8">Project Showcase</h2>
+    <div class="flex flex-wrap justify-center gap-2">
+      <button data-filter="all" class="filter-btn is-active border border-line bg-surface text-sm font-medium px-5 py-2.5 rounded-full hover:border-accent transition shadow-sm">All</button>
+      <button data-filter="architectural" class="filter-btn border border-line bg-surface text-sm font-medium px-5 py-2.5 rounded-full hover:border-accent transition shadow-sm">Architectural Design</button>
+      <button data-filter="ongoing" class="filter-btn border border-line bg-surface text-sm font-medium px-5 py-2.5 rounded-full hover:border-accent transition shadow-sm">Ongoing Projects</button>
+      <button data-filter="completed" class="filter-btn border border-line bg-surface text-sm font-medium px-5 py-2.5 rounded-full hover:border-accent transition shadow-sm">Completed Projects</button>
+      <button data-filter="special" class="filter-btn border border-line bg-surface text-sm font-medium px-5 py-2.5 rounded-full hover:border-accent transition shadow-sm">Special Development</button>
+    </div>
+  </div>
+
+  <div id="gallery-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div id="gallery-empty" class="hidden col-span-full text-center py-16 px-6 rounded-3xl border border-line bg-surface">
+      <p class="font-display text-lg font-bold text-ink mb-2">No projects available yet</p>
+      <p class="text-sm text-muted">Projects added through the Admin dashboard will appear here automatically.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== CTA ====================== -->
+<section class="max-w-7xl mx-auto px-5 sm:px-8 mt-24 reveal">
+  <div class="relative overflow-hidden rounded-[2rem] bg-accent text-onaccent px-8 py-14 md:px-16 md:py-16 flex flex-col md:flex-row md:items-center justify-between gap-8 shadow-xl">
+    <div class="orb -right-16 -top-16 w-64 h-64 bg-white/20"></div>
+    <div class="orb right-24 -bottom-20 w-52 h-52 bg-black/10" style="animation-delay:-5s"></div>
+    <div class="relative max-w-xl">
+      <h2 class="font-display text-3xl md:text-4xl font-bold mb-3">Have a project in mind?</h2>
+      <p class="text-onaccent/80">Tell us what you need and we'll recommend the right solution.</p>
+    </div>
+    <a href="contact.html" class="shine relative shrink-0 inline-flex items-center gap-2 bg-deep text-white font-bold text-sm px-7 py-4 rounded-full hover:bg-abyss transition">Get a Quote →</a>
+  </div>
+</section>
+
+</main>
+
+<!-- ====================== FOOTER ====================== -->
+<footer class="bg-abyss text-gray-400 mt-24 text-sm">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 pt-16 pb-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+    <div>
+      <div class="flex items-center gap-2.5 mb-4">
+        <img src="pictures/logo.png" alt="WWEC logo" class="h-12 w-auto object-contain" onerror="this.style.display='none'">
+        <span class="font-display font-bold text-white text-lg">WWEC</span>
+      </div>
+      <p class="leading-relaxed mb-3">Building Smarter. Building Stronger. Building the Future.</p>
+      <p class="text-gray-500 leading-relaxed">Headquarters: Ratmalana Industrial Zone, Sri Lanka.<br>26+ Years of Industry Experience.</p>
+    </div>
+    <div>
+      <h4 class="text-white font-semibold mb-4 text-xs uppercase tracking-widest">Services</h4>
+      <ul class="space-y-2.5">
+        <li><a href="building-solutions.html" class="hover:text-white transition">Building Solutions</a></li>
+        <li><a href="manufacturing.html" class="hover:text-white transition">Manufacturing</a></li>
+        <li><a href="professional-services.html" class="hover:text-white transition">Professional Services</a></li>
+        <li><a href="development-support.html" class="hover:text-white transition">Development &amp; Support</a></li>
+        <li><a href="engineering-solutions.html" class="hover:text-white transition">Engineering Solutions</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="text-white font-semibold mb-4 text-xs uppercase tracking-widest">Explore</h4>
+      <ul class="space-y-2.5">
+        <li><a href="index.html" class="hover:text-white transition">Home</a></li>
+        <li><a href="about.html" class="hover:text-white transition">About Us</a></li>
+        <li><a href="constructions.html" class="hover:text-white transition">Constructions</a></li>
+        <li><a href="apartments.html" class="hover:text-white transition">Apartments &amp; Developments</a></li>
+        <li><a href="gallery.html" class="hover:text-white transition">Project Gallery</a></li>
+        <li><a href="contact.html" class="hover:text-white transition">Contact Us</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="text-white font-semibold mb-4 text-xs uppercase tracking-widest">Follow WWEC</h4>
+      <div class="flex items-center gap-3 mb-6">
+        <a href="https://www.facebook.com" aria-label="Facebook" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/10 hover:bg-[#1877F2] text-white flex items-center justify-center transition duration-300"><svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg></a>
+        <a href="https://www.youtube.com" aria-label="YouTube" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/10 hover:bg-[#FF0000] text-white flex items-center justify-center transition duration-300"><svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+        <a href="https://www.tiktok.com" aria-label="TikTok" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/10 hover:bg-black text-white flex items-center justify-center transition duration-300"><svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg></a>
+        <a href="https://www.instagram.com" aria-label="Instagram" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/10 hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#dc2743] hover:to-[#bc1888] text-white flex items-center justify-center transition duration-300"><svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+      </div>
+      <a href="contact.html" class="inline-flex items-center gap-2 bg-accent hover:bg-accentDark text-onaccent font-semibold text-sm px-6 py-3.5 rounded-full transition">Get a Quote →</a>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 py-6 flex flex-col sm:flex-row justify-between gap-2 text-gray-500 text-xs">
+      <p>© 2026 World Wide Engineering &amp; Constructions (Pvt) Ltd.</p>
+      <p>All Rights Reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Scroll progress bar */
+  const bar = document.getElementById('progress');
+  const onScroll = () => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    bar.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* Reveal on scroll */
+  const io = new IntersectionObserver((entries, obs) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        obs.unobserve(e.target);
+        setTimeout(() => { e.target.style.transitionDelay = '0ms'; }, 1500);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* Hero image tilt (desktop) */
+  const wrap = document.getElementById('tilt-wrap'), tilt = document.getElementById('tilt');
+  if (!reduce && matchMedia('(hover: hover)').matches) {
+    wrap.addEventListener('pointermove', e => {
+      const r = wrap.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+      tilt.style.transform = `perspective(900px) rotateY(${x * 10}deg) rotateX(${-y * 8}deg)`;
+    });
+    wrap.addEventListener('pointerleave', () => { tilt.style.transform = ''; });
+  }
+
+  /* Gallery Filtering & Project Detail Navigation */
+  document.addEventListener('DOMContentLoaded', () => {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    let activeFilter = 'all';
+    applyGalleryFilter('all');
+
+    function applyGalleryFilter(filter) {
+      activeFilter = filter;
+      const allCards = document.querySelectorAll('#gallery-grid .project-card');
+      const emptyEl = document.getElementById('gallery-empty');
+      let visibleCount = 0;
+
+      allCards.forEach(card => {
+        const matches = filter === 'all' || card.getAttribute('data-category') === filter;
+        card.style.display = matches ? '' : 'none';
+        card.classList.toggle('hidden', !matches);
+        if (matches) visibleCount += 1;
+      });
+
+      if (emptyEl) {
+        emptyEl.classList.toggle('hidden', visibleCount > 0);
+      }
+    }
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('is-active', 'bg-deep', 'text-white'));
+        btn.classList.add('is-active', 'bg-deep', 'text-white');
+        applyGalleryFilter(btn.getAttribute('data-filter'));
+      });
+    });
+
+    const CATEGORY_LABELS = {
+      architectural: 'Architectural Design',
+      ongoing: 'Ongoing Project',
+      completed: 'Completed Project',
+      special: 'Special Development'
+    };
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    // Fetch dynamic projects stored in Google Sheets + Google Drive and link each to /project/<id>
+    const grid = document.getElementById('gallery-grid');
+    fetch('/api/gallery')
+      .then(r => r.json())
+      .then(data => {
+        if (!data.ok || !Array.isArray(data.items) || !data.items.length) {
+          applyGalleryFilter(activeFilter);
+          return;
+        }
+        const fragment = document.createDocumentFragment();
+
+        data.items.forEach(proj => {
+          const photos = proj.photos || proj.images || [];
+          const videos = proj.videos || [];
+          const baPairs = proj.before_after || [];
+
+          const coverUrl =
+            (photos[0] && photos[0].url) ||
+            (baPairs[0] && (baPairs[0].after_url || baPairs[0].before_url)) ||
+            'pictures/gallery.jpg';
+          const fallbackUrl = (photos[0] && photos[0].fallback_url) || '';
+
+          const catSlug = proj.category || 'completed';
+          const catLabel = CATEGORY_LABELS[catSlug] || 'Project';
+          const projectHref = `/project/${encodeURIComponent(proj.id)}`;
+
+          const mediaTags = [];
+          if (photos.length) mediaTags.push(`${photos.length} Photo${photos.length > 1 ? 's' : ''}`);
+          if (videos.length) mediaTags.push(`${videos.length} Video${videos.length > 1 ? 's' : ''}`);
+          if (baPairs.length) mediaTags.push(`${baPairs.length} Before/After`);
+
+          const mediaBadge = mediaTags.length
+            ? `<span class="absolute top-4 right-4 bg-abyss/80 text-amber-300 text-[10px] font-semibold px-2.5 py-1 rounded-full backdrop-blur-sm">${escapeHtml(mediaTags.join(' · '))}</span>`
+            : '';
+
+          const card = document.createElement('a');
+          card.href = projectHref;
+          card.setAttribute('data-category', catSlug);
+          card.className = 'project-card group relative block h-72 rounded-3xl overflow-hidden cursor-pointer shadow-lg border border-line';
+          card.innerHTML = `
+            <img src="${escapeHtml(coverUrl)}" alt="${escapeHtml(proj.title)}" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-abyss/90 via-abyss/25 to-transparent"></div>
+            <span class="absolute top-4 left-4 bg-accent text-onaccent text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">${escapeHtml(catLabel)}</span>
+            ${mediaBadge}
+            <div class="absolute bottom-0 inset-x-0 p-5 text-white">
+              <div class="flex items-end justify-between gap-2">
+                <h3 class="font-display font-bold leading-snug mb-1">${escapeHtml(proj.title)}</h3>
+                <span class="text-xs font-semibold text-amber-300 shrink-0 group-hover:translate-x-0.5 transition">View →</span>
+              </div>
+              <p class="text-xs text-white/75 max-h-0 opacity-0 group-hover:max-h-20 group-hover:opacity-100 transition-all duration-500">${escapeHtml(proj.description || 'Open project to view photos, videos, and before/after comparisons.')}</p>
+            </div>
+          `;
+
+          const imgEl = card.querySelector('img');
+          imgEl.addEventListener('error', () => {
+            if (fallbackUrl && imgEl.src !== fallbackUrl) {
+              imgEl.src = fallbackUrl;
+            }
+          });
+
+          fragment.appendChild(card);
+        });
+
+        grid.prepend(fragment);
+        applyGalleryFilter(activeFilter);
+      })
+      .catch(() => { applyGalleryFilter(activeFilter); });
+
+    // Auto-filter based on URL query parameter (e.g. gallery.html?filter=architectural)
+    const params = new URLSearchParams(window.location.search);
+    const filterParam = params.get('filter');
+    if (filterParam) {
+      const targetBtn = document.querySelector(`.filter-btn[data-filter="${filterParam}"]`);
+      if (targetBtn) {
+        targetBtn.click();
+        const showcase = document.getElementById('showcase');
+        if (showcase) {
+          showcase.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    }
+  });
+</script>
+</body>
+</html>

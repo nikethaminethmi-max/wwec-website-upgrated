@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Professional Services | World Wide Engineering &amp; Constructions</title>
+<meta name="description" content="Expert guidance across architectural design, cost estimation, quantity surveying, and rigorous project management from day one.">
+<script>
+  try {
+    const t = localStorage.getItem('color-theme');
+    if (t === 'dark' || (!t && matchMedia('(prefers-color-scheme: dark)').matches)) document.documentElement.classList.add('dark');
+    document.documentElement.classList.add('js');
+  } catch (e) {}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="tw-config.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+  html { scroll-behavior: smooth; overflow-x: clip; }
+  body { overflow-x: clip; }
+  #progress { position: fixed; inset: 0 0 auto 0; height: 3px; z-index: 60; transform-origin: left; transform: scaleX(0);
+              background: linear-gradient(90deg, #fbbf24, #f59e0b, #60a5fa); }
+
+  /* Hero headline: words rise out of a mask */
+  .word { display: inline-block; overflow: hidden; vertical-align: bottom; }
+  .word > span { display: inline-block; transform: translateY(110%); animation: rise .9s cubic-bezier(.16,1,.3,1) forwards; animation-delay: calc(var(--i) * 90ms + 200ms); }
+  @keyframes rise { to { transform: none; } }
+  .intro { opacity: 0; transform: translateY(18px); animation: intro .9s cubic-bezier(.16,1,.3,1) forwards; animation-delay: var(--d, 0ms); }
+  @keyframes intro { to { opacity: 1; transform: none; } }
+
+  .orb { position: absolute; border-radius: 9999px; filter: blur(64px); pointer-events: none; animation: drift 14s ease-in-out infinite alternate; }
+  @keyframes drift { to { transform: translate(40px, -30px) scale(1.15); } }
+
+  .shine { position: relative; overflow: hidden; }
+  .shine::after { content: ""; position: absolute; inset: 0; transform: translateX(-120%) skewX(-20deg);
+                  background: linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent); animation: shine 3.5s ease-in-out infinite; }
+  @keyframes shine { 60%, 100% { transform: translateX(120%) skewX(-20deg); } }
+
+  /* Scroll reveal */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); transition-delay: var(--d, 0ms); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .word > span, .intro, .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+
+<body class="font-sans bg-bg text-ink antialiased">
+<div id="progress"></div>
+
+<!-- ====================== HEADER ====================== -->
+<header class="sticky top-0 z-50 px-3 sm:px-5 pt-2.5 sm:pt-3">
+  <div class="max-w-7xl mx-auto">
+    <div class="bg-surface/95 backdrop-blur border border-line rounded-full shadow-lg pl-3.5 sm:pl-4 pr-2 h-15 sm:h-16 flex items-center justify-between gap-2 sm:gap-3">
+      <a href="index.html" class="flex items-center gap-2 shrink-0" aria-label="WWEC home">
+        <img src="pictures/logo.png" alt="WWEC logo" class="h-8 sm:h-9 w-auto object-contain" onerror="this.style.display='none'">
+        <span class="font-display font-bold text-base sm:text-lg tracking-tight">WWEC</span>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-1" aria-label="Main">
+        <a href="index.html" class="px-4 py-2 rounded-full text-sm font-medium transition text-muted hover:text-ink">Home</a>
+        <a href="about.html" class="px-4 py-2 rounded-full text-sm font-medium transition text-muted hover:text-ink">About</a>
+        <div class="relative group">
+          <a href="building-solutions.html" class="px-4 py-2 rounded-full text-sm font-medium transition bg-deep text-white inline-flex items-center gap-1" aria-current="page">Services <span class="text-[10px]">▾</span></a>
+          <div class="absolute left-0 top-full pt-3 hidden group-hover:block group-focus-within:block">
+            <div class="w-60 bg-surface border border-line rounded-2xl shadow-xl p-2">
+              <a href="building-solutions.html" class="block px-4 py-2.5 rounded-xl text-sm text-muted hover:bg-mint hover:text-ink transition">Building Solutions</a>
+              <a href="manufacturing.html" class="block px-4 py-2.5 rounded-xl text-sm text-muted hover:bg-mint hover:text-ink transition">Manufacturing</a>
+              <a href="professional-services.html" class="block px-4 py-2.5 rounded-xl text-sm text-muted hover:bg-mint hover:text-ink transition">Professional Services</a>
+              <a href="development-support.html" class="block px-4 py-2.5 rounded-xl text-sm text-muted hover:bg-mint hover:text-ink transition">Development &amp; Support</a>
+              <a href="engineering-solutions.html" class="block px-4 py-2.5 rounded-xl text-sm text-muted hover:bg-mint hover:text-ink transition">Engineering Solutions</a>
+            </div>
+          </div>
+        </div>
+        <a href="constructions.html" class="px-4 py-2 rounded-full text-sm font-medium transition text-muted hover:text-ink">Constructions</a>
+        <a href="apartments.html" class="px-4 py-2 rounded-full text-sm font-medium transition text-muted hover:text-ink">Developments</a>
+        <div class="relative group">
+          <a href="gallery.html" class="px-4 py-2 rounded-full text-sm font-medium transition text-muted hover:text-ink inline-flex items-center gap-1">Gallery <span class="text-[10px]">▾</span></a>
+          <div class="absolute left-0 top-full pt-3 hidden group-hover:block group-focus-within:block">
+            <div class="w-60 bg-surface border border-line rounded-2xl shadow-xl p-2">
+              <a href="gallery.html?filter=architectural" class="block px-4 py-2.5 rounded-xl text-sm text-muted hover:bg-mint hover:text-ink transition">Architectural Design</a>
+              <a href="gallery.html?filter=ongoing" class="block px-4 py-2.5 rounded-xl text-sm text-muted hover:bg-mint hover:text-ink transition">Ongoing Projects</a>
+              <a href="gallery.html?filter=completed" class="block px-4 py-2.5 rounded-xl text-sm text-muted hover:bg-mint hover:text-ink transition">Completed Projects</a>
+              <a href="gallery.html?filter=special" class="block px-4 py-2.5 rounded-xl text-sm text-muted hover:bg-mint hover:text-ink transition">Special Development</a>
+            </div>
+          </div>
+        </div>
+        <a href="contact.html" class="px-4 py-2 rounded-full text-sm font-medium transition text-muted hover:text-ink">Contact</a>
+      </nav>
+
+      <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        <button id="theme-toggle" type="button" aria-label="Toggle dark mode" class="w-10 h-10 rounded-full border border-line flex items-center justify-center text-ink hover:border-accent transition">
+          <svg class="icon-moon w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
+          <svg class="icon-sun w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/></svg>
+        </button>
+        <a href="contact.html" class="hidden sm:inline-flex bg-accent hover:bg-accentDark text-onaccent font-semibold text-sm px-5 h-10 items-center rounded-full transition">Get a Quote</a>
+        <button id="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" class="lg:hidden w-10 h-10 rounded-full border border-line flex items-center justify-center text-ink hover:border-accent transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-menu" class="hidden lg:hidden mt-2 bg-surface border border-line rounded-3xl shadow-xl px-5 py-4 space-y-1 max-h-[80vh] overflow-y-auto">
+      <a href="index.html" class="block py-2.5 px-3 rounded-xl text-sm font-medium text-ink hover:bg-mint transition">Home</a>
+      <a href="about.html" class="block py-2.5 px-3 rounded-xl text-sm font-medium text-ink hover:bg-mint transition">About</a>
+      <a href="constructions.html" class="block py-2.5 px-3 rounded-xl text-sm font-medium text-ink hover:bg-mint transition">Constructions</a>
+      <a href="apartments.html" class="block py-2.5 px-3 rounded-xl text-sm font-medium text-ink hover:bg-mint transition">Developments</a>
+      <a href="gallery.html" class="block py-2.5 px-3 rounded-xl text-sm font-medium text-ink hover:bg-mint transition">Gallery</a>
+      <a href="contact.html" class="block py-2.5 px-3 rounded-xl text-sm font-medium text-ink hover:bg-mint transition">Contact</a>
+      <p class="pt-3 pb-1 px-3 text-[11px] font-semibold uppercase tracking-widest text-muted">Services</p>
+      <a href="building-solutions.html" class="block py-2 px-3 rounded-xl text-sm text-muted hover:bg-mint hover:text-ink transition">Building Solutions</a>
+      <a href="manufacturing.html" class="block py-2 px-3 rounded-xl text-sm text-muted hover:bg-mint hover:text-ink transition">Manufacturing</a>
+      <a href="professional-services.html" class="block py-2.5 px-3 rounded-xl text-sm font-semibold bg-mint text-gt" aria-current="page">Professional Services</a>
+      <a href="development-support.html" class="block py-2 px-3 rounded-xl text-sm text-muted hover:bg-mint hover:text-ink transition">Development &amp; Support</a>
+      <a href="engineering-solutions.html" class="block py-2 px-3 rounded-xl text-sm text-muted hover:bg-mint hover:text-ink transition">Engineering Solutions</a>
+      <a href="contact.html" class="mt-3 mb-1 w-full inline-flex items-center justify-center bg-accent hover:bg-accentDark text-onaccent font-semibold text-sm px-6 py-3.5 rounded-full transition shadow-sm">Get a Quote</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ====================== HERO ====================== -->
+<section class="max-w-7xl mx-auto px-4 sm:px-8 pt-6 sm:pt-8">
+  <div class="relative overflow-hidden rounded-[1.75rem] sm:rounded-[2.5rem] bg-deep text-white shadow-2xl">
+    <div class="orb -right-24 -top-24 w-72 sm:w-96 h-72 sm:h-96 bg-amber-500/25"></div>
+    <div class="orb -left-24 -bottom-24 w-72 sm:w-96 h-72 sm:h-96 bg-blue-500/25" style="animation-delay:-6s"></div>
+    <div class="orb left-1/3 top-1/3 w-64 sm:w-80 h-64 sm:h-80 bg-emerald-500/10" style="animation-delay:-3s"></div>
+
+    <div class="relative z-10 grid lg:grid-cols-5 gap-6 sm:gap-8 items-center p-6 sm:p-12 lg:p-16">
+      <div class="lg:col-span-3 space-y-3.5 sm:space-y-4">
+        <nav aria-label="Breadcrumb" class="intro inline-flex flex-wrap items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-md text-[11px] sm:text-xs text-white/90 font-medium">
+          <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+          <a href="index.html" class="hover:text-amber-300 transition">Home</a><span>/</span><span class="text-amber-300">Professional Services</span>
+        </nav>
+
+        <p class="intro text-[11px] sm:text-xs font-bold tracking-[0.18em] uppercase text-amber-400">03 / Consultancy &amp; Management</p>
+        <h1 class="intro font-display text-2xl sm:text-4xl lg:text-5xl font-bold leading-[1.12]" style="--d:200ms">Architectural Consultancy &amp; Quantity Surveying</h1>
+        <p class="intro text-white/75 max-w-xl leading-relaxed text-sm sm:text-lg" style="--d:350ms">Expert guidance across architectural design, cost estimation, quantity surveying, and rigorous project management from day one.</p>
+      </div>
+
+      <div class="intro lg:col-span-2" style="--d:500ms">
+        <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&amp;fit=crop&amp;w=1400&amp;q=80" alt="Professional Services" class="w-full h-52 sm:h-60 lg:h-72 object-cover rounded-2xl sm:rounded-[1.5rem] shadow-2xl border-2 sm:border-4 border-white/10">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================== OVERVIEW ====================== -->
+<section class="max-w-7xl mx-auto px-4 sm:px-8 mt-14 sm:mt-24 grid lg:grid-cols-12 gap-8 sm:gap-12 items-center">
+  <div class="lg:col-span-6 reveal">
+    <p class="text-xs font-bold tracking-[0.18em] uppercase text-gt mb-2.5 sm:mb-3">Expert Planning</p>
+    <h2 class="font-display text-2xl sm:text-3xl font-bold mb-4 sm:mb-5">Guiding Your Project from Concept to Compliance</h2>
+    <p class="text-sm sm:text-base text-muted leading-relaxed mb-6 sm:mb-8">Our team of registered architects, chartered engineers, and quantity surveyors ensure your blueprints meet all structural safety codes, municipal regulations, and precise budget constraints.</p>
+
+    <div class="space-y-3.5 sm:space-y-4">
+      <div class="reveal flex items-start gap-3.5 sm:gap-4 bg-surface border border-line rounded-2xl p-4 sm:p-5 shadow-sm">
+        <span class="w-9 h-9 shrink-0 rounded-full bg-accent text-onaccent font-bold text-xs flex items-center justify-center">01</span>
+        <div>
+          <h3 class="font-display font-bold text-sm sm:text-base mb-1">3D Architectural Visualization</h3>
+          <p class="text-xs sm:text-sm text-muted leading-relaxed">Walk through your future spaces before construction begins.</p>
+        </div>
+      </div>
+      <div class="reveal flex items-start gap-3.5 sm:gap-4 bg-surface border border-line rounded-2xl p-4 sm:p-5 shadow-sm" style="--d:150ms">
+        <span class="w-9 h-9 shrink-0 rounded-full bg-accent text-onaccent font-bold text-xs flex items-center justify-center">02</span>
+        <div>
+          <h3 class="font-display font-bold text-sm sm:text-base mb-1">Bill of Quantities (BOQ)</h3>
+          <p class="text-xs sm:text-sm text-muted leading-relaxed">Transparent, itemized material and labor cost forecasting.</p>
+        </div>
+      </div>
+      <div class="reveal flex items-start gap-3.5 sm:gap-4 bg-surface border border-line rounded-2xl p-4 sm:p-5 shadow-sm" style="--d:300ms">
+        <span class="w-9 h-9 shrink-0 rounded-full bg-accent text-onaccent font-bold text-xs flex items-center justify-center">03</span>
+        <div>
+          <h3 class="font-display font-bold text-sm sm:text-base mb-1">Regulatory Approvals</h3>
+          <p class="text-xs sm:text-sm text-muted leading-relaxed">Complete handling of municipal and local authority documentation.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lg:col-span-6 reveal" style="--d:200ms">
+    <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&amp;fit=crop&amp;w=1000&amp;q=80" alt="Professional Services" class="w-full h-64 sm:h-96 lg:h-[480px] object-cover rounded-3xl sm:rounded-[2rem] shadow-xl border border-line">
+  </div>
+</section>
+
+<!-- ====================== MORE SERVICES ====================== -->
+<section class="max-w-7xl mx-auto px-4 sm:px-8 mt-14 sm:mt-24 reveal">
+  <p class="text-xs font-bold tracking-[0.18em] uppercase text-gt mb-4">More Services</p>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
+    <a href="building-solutions.html" class="card-lift bg-surface border border-line rounded-2xl p-4 sm:p-5 text-sm font-semibold hover:text-gt shadow-sm flex justify-between items-center">Building Solutions <span>→</span></a>
+    <a href="manufacturing.html" class="card-lift bg-surface border border-line rounded-2xl p-4 sm:p-5 text-sm font-semibold hover:text-gt shadow-sm flex justify-between items-center">Manufacturing <span>→</span></a>
+    <a href="development-support.html" class="card-lift bg-surface border border-line rounded-2xl p-4 sm:p-5 text-sm font-semibold hover:text-gt shadow-sm flex justify-between items-center">Development &amp; Support <span>→</span></a>
+    <a href="engineering-solutions.html" class="card-lift bg-surface border border-line rounded-2xl p-4 sm:p-5 text-sm font-semibold hover:text-gt shadow-sm flex justify-between items-center">Engineering Solutions <span>→</span></a>
+  </div>
+</section>
+
+<!-- ====================== CTA ====================== -->
+<section class="max-w-7xl mx-auto px-4 sm:px-8 mt-14 sm:mt-24 reveal">
+  <div class="relative overflow-hidden rounded-3xl sm:rounded-[2rem] bg-accent text-onaccent px-6 py-10 sm:px-16 sm:py-16 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 sm:gap-8 shadow-xl">
+    <div class="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-white/10 pointer-events-none"></div>
+    <div class="absolute right-24 -bottom-20 w-52 h-52 rounded-full bg-black/15 pointer-events-none"></div>
+    <div class="relative max-w-xl">
+      <h2 class="font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-2.5 sm:mb-3 text-slate-950">Need Professional Advice or a BOQ Estimate?</h2>
+      <p class="text-sm sm:text-base text-slate-900/80">Speak with our team to discuss timelines, options and estimates.</p>
+    </div>
+    <a href="contact.html" class="shine relative w-full md:w-auto justify-center shrink-0 inline-flex items-center gap-2 bg-deep text-white font-bold text-sm px-7 py-4 rounded-full hover:bg-abyss transition shadow-md">Speak With Our Consultants →</a>
+  </div>
+</section>
+
+</main>
+
+<!-- ====================== FOOTER ====================== -->
+<footer class="bg-abyss text-gray-400 mt-16 sm:mt-24 text-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-8 pt-12 sm:pt-16 pb-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
+    <div>
+      <div class="flex items-center gap-2.5 mb-4">
+        <img src="pictures/logo.png" alt="WWEC logo" class="h-11 sm:h-12 w-auto object-contain" onerror="this.style.display='none'">
+        <span class="font-display font-bold text-white text-lg">WWEC</span>
+      </div>
+      <p class="leading-relaxed mb-3">Building Smarter. Building Stronger. Building the Future.</p>
+      <p class="text-gray-500 leading-relaxed">Headquarters: Ratmalana Industrial Zone, Sri Lanka.<br>26+ Years of Industry Experience.</p>
+    </div>
+    <div>
+      <h4 class="text-white font-semibold mb-3.5 sm:mb-4 text-xs uppercase tracking-widest">Services</h4>
+      <ul class="space-y-2.5">
+        <li><a href="building-solutions.html" class="hover:text-white transition">Building Solutions</a></li>
+        <li><a href="manufacturing.html" class="hover:text-white transition">Manufacturing</a></li>
+        <li><a href="professional-services.html" class="hover:text-white transition">Professional Services</a></li>
+        <li><a href="development-support.html" class="hover:text-white transition">Development &amp; Support</a></li>
+        <li><a href="engineering-solutions.html" class="hover:text-white transition">Engineering Solutions</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="text-white font-semibold mb-3.5 sm:mb-4 text-xs uppercase tracking-widest">Explore</h4>
+      <ul class="space-y-2.5">
+        <li><a href="index.html" class="hover:text-white transition">Home</a></li>
+        <li><a href="about.html" class="hover:text-white transition">About Us</a></li>
+        <li><a href="constructions.html" class="hover:text-white transition">Constructions</a></li>
+        <li><a href="apartments.html" class="hover:text-white transition">Apartments &amp; Developments</a></li>
+        <li><a href="gallery.html" class="hover:text-white transition">Project Gallery</a></li>
+        <li><a href="contact.html" class="hover:text-white transition">Contact Us</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="text-white font-semibold mb-3.5 sm:mb-4 text-xs uppercase tracking-widest">Follow WWEC</h4>
+      <div class="flex items-center gap-3 mb-6">
+        <a href="https://www.facebook.com" aria-label="Facebook" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/10 hover:bg-[#1877F2] text-white flex items-center justify-center transition duration-300"><svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg></a>
+        <a href="https://www.youtube.com" aria-label="YouTube" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/10 hover:bg-[#FF0000] text-white flex items-center justify-center transition duration-300"><svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+        <a href="https://www.tiktok.com" aria-label="TikTok" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/10 hover:bg-black text-white flex items-center justify-center transition duration-300"><svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg></a>
+        <a href="https://www.instagram.com" aria-label="Instagram" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-white/10 hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#dc2743] hover:to-[#bc1888] text-white flex items-center justify-center transition duration-300"><svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+      </div>
+      <a href="contact.html" class="w-full sm:w-auto justify-center inline-flex items-center gap-2 bg-accent hover:bg-accentDark text-onaccent font-semibold text-sm px-6 py-3.5 rounded-full transition">Get a Quote →</a>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 py-6 flex flex-col sm:flex-row justify-between gap-2 text-gray-500 text-xs text-center sm:text-left">
+      <p>© 2026 World Wide Engineering &amp; Constructions (Pvt) Ltd.</p>
+      <p>All Rights Reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+  /* Scroll progress bar */
+  const bar = document.getElementById('progress');
+  const onScroll = () => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    bar.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* Reveal on scroll */
+  const io = new IntersectionObserver((entries, obs) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        obs.unobserve(e.target);
+        setTimeout(() => { e.target.style.transitionDelay = '0ms'; }, 1500);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

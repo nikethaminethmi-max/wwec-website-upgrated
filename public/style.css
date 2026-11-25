@@ -1,0 +1,76 @@
+/* WWEC redesign — navy / blue / beige / gold theme tokens (light + dark) */
+:root {
+  --bg: #F4EDE0;        /* beige */
+  --surface: #FFFBF3;
+  --surface2: #EADFCB;
+  --ink: #14213D;       /* deep navy text */
+  --muted: #4A5670;
+  --line: #D9CCB3;
+  --brand: #1F3A68;     /* blue */
+  --deep: #14284B;      /* navy panels */
+  --accent: #D4A52E;    /* gold (fills) */
+  --accentDark: #B98A1C;
+  --gt: #8A6508;        /* gold used as text on light backgrounds */
+  --mint: #E3E8F0;      /* pale blue tint */
+  --red: #B00020;         /* error / danger */
+}
+
+.dark {
+  --bg: #0B1426;
+  --surface: #111D36;
+  --surface2: #0E182E;
+  --ink: #F2EBDD;
+  --muted: #A9B4C9;
+  --line: #22314F;
+  --brand: #8FB0E8;
+  --deep: #0F1D3A;
+  --accent: #D9AE45;
+  --accentDark: #C29A32;
+  --gt: #E3B550;
+  --mint: #16233F;
+  --red: #B00020;
+}
+
+html { scroll-behavior: smooth; }
+body { transition: background-color .3s ease, color .3s ease; }
+h1, h2, h3, h4 { font-family: 'Sora', sans-serif; letter-spacing: -0.02em; }
+
+/* Theme toggle icons */
+.icon-sun { display: none; }
+.dark .icon-sun { display: block; }
+.dark .icon-moon { display: none; }
+
+/* Gallery filter */
+.filter-btn.is-active { background: var(--deep); color: #fff; border-color: var(--deep); }
+
+/* Scroll reveal (only when JS is running) */
+.js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+.js .reveal.in { opacity: 1; transform: none; }
+
+/* Subtle blueprint grid used on dark hero sections */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+.card-lift { transition: transform .3s ease, box-shadow .3s ease; }
+.card-lift:hover { transform: translateY(-6px); box-shadow: 0 20px 40px -20px rgba(0,0,0,.35); }
+
+/* Counting animation (homepage "26+" figures) */
+.count-up { font-variant-numeric: tabular-nums; transform-origin: center; will-change: contents; }
+.count-up[data-align="left"] { transform-origin: left center; }
+.count-up.count-done { animation: count-pop .85s cubic-bezier(.2, .8, .2, 1) 1; }
+@keyframes count-pop {
+  0%   { transform: scale(1);    text-shadow: 0 0 0 transparent; }
+  40%  { transform: scale(1.14); text-shadow: 0 0 22px var(--accent); }
+  100% { transform: scale(1);    text-shadow: 0 0 0 transparent; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+  video[autoplay] { display: none; }
+  .count-up.count-done { animation: none; }
+}
