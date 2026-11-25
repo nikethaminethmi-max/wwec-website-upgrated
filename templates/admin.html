@@ -1,624 +1,82 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Dashboard — WWEC</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="/tw-config.js"></script>
-  <link rel="stylesheet" href="/style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login | WWEC</title>
+<script>
+  try {
+    const t = localStorage.getItem('color-theme');
+    if (t === 'dark' || (!t && matchMedia('(prefers-color-scheme: dark)').matches)) document.documentElement.classList.add('dark');
+    document.documentElement.classList.add('js');
+  } catch (e) {}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="/tw-config.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
 </head>
-<body class="min-h-screen bg-slate-950 text-slate-100">
-  <!-- Top Bar -->
-  <header class="sticky top-0 z-30 border-b border-slate-800 bg-slate-900/95 backdrop-blur">
-    <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-3.5">
-      <div class="flex items-center gap-3">
-        <img src="/pictures/logo.png" alt="WWEC Logo" class="h-10 w-auto object-contain" onerror="this.style.display='none'" />
-        <div>
-          <h1 class="font-display text-lg font-bold text-amber-400">WWEC Admin Dashboard</h1>
-          <p class="text-xs text-slate-400">Signed in as <span class="text-slate-200">{{ admin_user }}</span></p>
-        </div>
-      </div>
+<body class="font-sans bg-bg text-ink antialiased min-h-screen flex items-center justify-center px-4 py-8 sm:py-12">
 
-      <nav class="flex flex-wrap items-center gap-2">
-        <a href="/admin?tab=overview"
-          class="rounded-lg px-3 py-1.5 text-sm font-medium {% if tab == 'overview' %}bg-amber-400 text-slate-950{% else %}bg-slate-800 text-slate-200 hover:bg-slate-700{% endif %}">
-          Overview
-        </a>
-        <a href="/admin?tab=gallery"
-          class="rounded-lg px-3 py-1.5 text-sm font-medium {% if tab == 'gallery' %}bg-amber-400 text-slate-950{% else %}bg-slate-800 text-slate-200 hover:bg-slate-700{% endif %}">
-          Gallery Upload
-        </a>
-        <a href="/admin?tab=enquiries"
-          class="rounded-lg px-3 py-1.5 text-sm font-medium {% if tab == 'enquiries' %}bg-amber-400 text-slate-950{% else %}bg-slate-800 text-slate-200 hover:bg-slate-700{% endif %}">
-          Enquiries ({{ stats.new_enquiries }})
-        </a>
-        <a href="/" target="_blank"
-          class="rounded-lg border border-slate-700 px-3 py-1.5 text-sm text-slate-200 hover:border-amber-400 hover:text-amber-300">
-          Live Site
-        </a>
-        <form method="POST" action="/admin/logout" class="inline">
-          <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
-          <button type="submit" class="rounded-lg bg-rose-950/80 border border-rose-800 px-3 py-1.5 text-sm text-rose-200 hover:bg-rose-900">
-            Logout
-          </button>
-        </form>
-      </nav>
+  <div class="w-full max-w-md bg-surface border border-line rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
+    <div class="flex items-center justify-between gap-2">
+      <a href="/" class="flex items-center gap-2.5 min-w-0">
+        <img src="/pictures/logo.png" alt="WWEC logo" class="h-9 w-auto object-contain shrink-0" onerror="this.style.display='none'">
+        <span class="font-display font-bold text-lg tracking-tight truncate">WWEC Admin</span>
+      </a>
+      <button id="theme-toggle" type="button" aria-label="Toggle dark mode" class="w-10 h-10 rounded-full border border-line flex items-center justify-center text-ink hover:border-accent transition shrink-0">
+        <svg class="icon-moon w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
+        <svg class="icon-sun w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/></svg>
+      </button>
     </div>
-  </header>
 
-  <main class="mx-auto max-w-7xl px-4 py-8 space-y-6">
-    <!-- Flash Messages -->
+    <div>
+      <h1 class="font-display text-2xl font-bold">Sign in to Dashboard</h1>
+      <p class="text-sm text-muted mt-1">Manage construction projects, developments, and gallery photos.</p>
+    </div>
+
+    {% if error %}
+      <div role="alert" class="px-4 py-3 rounded-2xl border text-xs font-medium bg-red-500/10 border-red-500/30 text-red-700 dark:text-red-300">
+        {{ error }}
+      </div>
+    {% endif %}
+
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         <div class="space-y-2">
-          {% for category, msg in messages %}
-            <div class="rounded-xl border px-4 py-3 text-sm {% if category == 'error' %}border-rose-700 bg-rose-950/75 text-rose-200{% else %}border-emerald-700 bg-emerald-950/75 text-emerald-200{% endif %}">
-              {{ msg }}
+          {% for category, message in messages %}
+            <div class="px-4 py-3 rounded-2xl border text-xs font-medium {{ 'bg-emerald-500/10 border-emerald-500/30 text-emerald-700 dark:text-emerald-300' if category == 'success' else 'bg-red-500/10 border-red-500/30 text-red-700 dark:text-red-300' }}">
+              {{ message }}
             </div>
           {% endfor %}
         </div>
       {% endif %}
     {% endwith %}
 
-    {% if api_warning %}
-      <div class="rounded-xl border border-amber-700/80 bg-amber-950/60 px-4 py-3 text-sm text-amber-200">
-        {{ api_warning }}
-      </div>
-    {% endif %}
-
-    <!-- Stats Cards -->
-    <section class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-        <p class="text-xs uppercase tracking-wider text-slate-400">Gallery Projects</p>
-        <p class="mt-2 font-display text-3xl font-bold text-white">{{ stats.total_projects }}</p>
-      </div>
-      <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-        <p class="text-xs uppercase tracking-wider text-slate-400">Drive Photos</p>
-        <p class="mt-2 font-display text-3xl font-bold text-sky-300">{{ stats.total_images }}</p>
-      </div>
-      <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-        <p class="text-xs uppercase tracking-wider text-slate-400">Total Enquiries</p>
-        <p class="mt-2 font-display text-3xl font-bold text-white">{{ stats.total_enquiries }}</p>
-      </div>
-      <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-        <p class="text-xs uppercase tracking-wider text-slate-400">New Enquiries</p>
-        <p class="mt-2 font-display text-3xl font-bold text-amber-400">{{ stats.new_enquiries }}</p>
-      </div>
-    </section>
-
-    {% if tab == 'overview' %}
-      <section class="grid gap-6 lg:grid-cols-2">
-        <div class="rounded-2xl border border-slate-800 bg-slate-900 p-6">
-          <div class="flex items-center justify-between mb-4">
-            <h2 class="font-display text-lg font-semibold text-white">Recent Enquiries</h2>
-            <a href="/admin?tab=enquiries" class="text-xs font-medium text-amber-400 hover:underline">View all</a>
-          </div>
-          {% if recent_enquiries %}
-            <div class="space-y-3">
-              {% for item in recent_enquiries %}
-                <div class="rounded-xl border border-slate-800 bg-slate-950/70 p-3.5">
-                  <div class="flex items-center justify-between gap-2">
-                    <span class="font-medium text-white">{{ item.name }}</span>
-                    <span class="rounded-full bg-slate-800 px-2.5 py-0.5 text-xs text-amber-300">{{ item.status or 'New' }}</span>
-                  </div>
-                  <p class="mt-1 text-xs text-slate-400">{{ item.subject }} &bull; {{ item.email }}</p>
-                  <p class="mt-1.5 text-sm text-slate-300 line-clamp-2">{{ item.message }}</p>
-                </div>
-              {% endfor %}
-            </div>
-          {% else %}
-            <p class="text-sm text-slate-400">No enquiries recorded yet.</p>
-          {% endif %}
-        </div>
-
-        <div class="rounded-2xl border border-slate-800 bg-slate-900 p-6">
-          <div class="flex items-center justify-between mb-4">
-            <h2 class="font-display text-lg font-semibold text-white">Recent Gallery Projects</h2>
-            <a href="/admin?tab=gallery" class="text-xs font-medium text-amber-400 hover:underline">Upload new</a>
-          </div>
-          {% if recent_projects %}
-            <div class="grid gap-3 sm:grid-cols-2">
-              {% for proj in recent_projects %}
-                <a href="/project/{{ proj.id }}" target="_blank" class="rounded-xl border border-slate-800 bg-slate-950/70 p-3 hover:border-amber-400/60 transition">
-                  {% if proj.images and proj.images[0].url %}
-                    <img src="{{ proj.images[0].url }}" alt="{{ proj.title }}" class="h-32 w-full rounded-lg object-cover mb-2.5" onerror="this.style.display='none'" />
-                  {% endif %}
-                  <p class="font-medium text-white text-sm truncate">{{ proj.title }}</p>
-                  <p class="text-xs text-slate-400">{{ categories.get(proj.category, proj.category) }}</p>
-                </a>
-              {% endfor %}
-            </div>
-          {% else %}
-            <p class="text-sm text-slate-400">No gallery projects uploaded yet.</p>
-          {% endif %}
-        </div>
-      </section>
-
-    {% elif tab == 'gallery' %}
-      <!-- Upload Form -->
-      <section class="rounded-2xl border border-slate-800 bg-slate-900 p-6">
-        <h2 class="font-display text-xl font-semibold text-white">Create Project Showcase</h2>
-        <p class="mt-1 text-sm text-slate-400">
-          Add standard photos, videos, and before/after comparisons. Clicking a project on the live site opens its full media page.
-        </p>
-
-        <form method="POST" action="/admin/gallery/upload" enctype="multipart/form-data" class="mt-6 space-y-6">
-          <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
-
-          <div class="grid gap-4 md:grid-cols-2">
-            <div>
-              <label for="title" class="block text-sm font-medium text-slate-300">Project Title *</label>
-              <input id="title" name="title" type="text" required
-                class="mt-1.5 w-full rounded-xl border border-slate-700 bg-slate-950 px-3.5 py-2.5 text-white focus:border-amber-400 focus:outline-none"
-                placeholder="e.g., Prefab Villa Exterior — Ratmalana" />
-            </div>
-
-            <div>
-              <label for="category" class="block text-sm font-medium text-slate-300">Category *</label>
-              <select id="category" name="category"
-                class="mt-1.5 w-full rounded-xl border border-slate-700 bg-slate-950 px-3.5 py-2.5 text-white focus:border-amber-400 focus:outline-none">
-                {% for key, label in categories.items() %}
-                  <option value="{{ key }}">{{ label }}</option>
-                {% endfor %}
-              </select>
-            </div>
-          </div>
-
-          <div>
-            <label for="description" class="block text-sm font-medium text-slate-300">Project Description</label>
-            <textarea id="description" name="description" rows="2"
-              class="mt-1.5 w-full rounded-xl border border-slate-700 bg-slate-950 px-3.5 py-2.5 text-white focus:border-amber-400 focus:outline-none"
-              placeholder="Scope of work, location, structural details, or completion notes..."></textarea>
-          </div>
-
-          <!-- 1. Standard Photos -->
-          <div class="rounded-xl border border-slate-800 bg-slate-950/70 p-4 space-y-3">
-            <div class="flex items-center justify-between">
-              <label for="images" class="block text-sm font-semibold text-amber-300">1. Project Photos (JPG, PNG, WEBP — up to 10)</label>
-              <span class="text-xs text-slate-400">Used as cover + photo gallery</span>
-            </div>
-            <input id="images" name="images" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" multiple
-              class="w-full rounded-xl border border-slate-700 bg-slate-900 px-3.5 py-2 text-sm text-slate-300 file:mr-4 file:rounded-lg file:border-0 file:bg-amber-400 file:px-3.5 file:py-1.5 file:text-xs file:font-semibold file:text-slate-950 hover:file:bg-amber-300" />
-            <div id="previewGrid" class="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-5"></div>
-          </div>
-
-          <!-- 2. Videos -->
-          <div class="rounded-xl border border-slate-800 bg-slate-950/70 p-4 space-y-4">
-            <div>
-              <h3 class="text-sm font-semibold text-sky-300">2. Project Videos (Optional)</h3>
-              <p class="text-xs text-slate-400">Upload video files (MP4, WEBM, MOV) and/or paste a YouTube / video link.</p>
-            </div>
-
-            <div class="grid gap-4 md:grid-cols-2">
-              <div>
-                <label for="videos" class="block text-xs font-medium text-slate-300">Upload Video Files</label>
-                <input id="videos" name="videos" type="file" accept=".mp4,.webm,.mov,video/mp4,video/webm,video/quicktime" multiple
-                  class="mt-1.5 w-full rounded-xl border border-slate-700 bg-slate-900 px-3.5 py-2 text-sm text-slate-300 file:mr-4 file:rounded-lg file:border-0 file:bg-sky-400 file:px-3.5 file:py-1.5 file:text-xs file:font-semibold file:text-slate-950 hover:file:bg-sky-300" />
-              </div>
-
-              <div>
-                <label for="video_caption" class="block text-xs font-medium text-slate-300">Video Caption</label>
-                <input id="video_caption" name="video_caption" type="text"
-                  class="mt-1.5 w-full rounded-xl border border-slate-700 bg-slate-900 px-3.5 py-2 text-sm text-white focus:border-sky-400 focus:outline-none"
-                  placeholder="e.g., Site Walkthrough & Roof Installation" />
-              </div>
-            </div>
-
-            <div>
-              <label for="video_url" class="block text-xs font-medium text-slate-300">Or External Video URL (YouTube / MP4 Link)</label>
-              <input id="video_url" name="video_url" type="url"
-                class="mt-1.5 w-full rounded-xl border border-slate-700 bg-slate-900 px-3.5 py-2 text-sm text-white focus:border-sky-400 focus:outline-none"
-                placeholder="https://www.youtube.com/watch?v=... or https://.../video.mp4" />
-            </div>
-          </div>
-
-          <!-- 3. Before & After Pairs -->
-          <div class="rounded-xl border border-slate-800 bg-slate-950/70 p-4 space-y-4">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-              <div>
-                <h3 class="text-sm font-semibold text-emerald-300">3. Before &amp; After Comparisons (Optional)</h3>
-                <p class="text-xs text-slate-400">Pair a "Before" photo and an "After" photo to create an interactive slider on the project page.</p>
-              </div>
-              <button id="addBaRowBtn" type="button"
-                class="rounded-lg border border-emerald-700/70 bg-emerald-950/60 px-3 py-1.5 text-xs font-medium text-emerald-200 hover:bg-emerald-900">
-                + Add Another Pair
-              </button>
-            </div>
-
-            <div id="baRowsContainer" class="space-y-3">
-              <div class="ba-pair-row grid gap-3 rounded-xl border border-slate-800/90 bg-slate-900/80 p-3 md:grid-cols-3">
-                <div>
-                  <label class="block text-xs text-slate-300">Before Image</label>
-                  <input name="ba_before" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-                    class="mt-1 w-full text-xs text-slate-300 file:mr-2 file:rounded file:border-0 file:bg-slate-700 file:px-2.5 file:py-1 file:text-xs file:text-white" />
-                </div>
-                <div>
-                  <label class="block text-xs text-slate-300">After Image</label>
-                  <input name="ba_after" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-                    class="mt-1 w-full text-xs text-slate-300 file:mr-2 file:rounded file:border-0 file:bg-emerald-500 file:px-2.5 file:py-1 file:text-xs file:font-semibold file:text-slate-950" />
-                </div>
-                <div>
-                  <label class="block text-xs text-slate-300">Comparison Caption</label>
-                  <input name="ba_caption" type="text"
-                    class="mt-1 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-1.5 text-xs text-white focus:border-emerald-400 focus:outline-none"
-                    placeholder="e.g., Foundation to finished facade" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <button type="submit"
-            class="rounded-xl bg-amber-400 px-6 py-2.5 font-semibold text-slate-950 transition hover:bg-amber-300">
-            Publish Project to Gallery
-          </button>
-        </form>
-      </section>
-
-      <!-- Existing Gallery Projects -->
-      <section class="rounded-2xl border border-slate-800 bg-slate-900 p-6">
-        <h2 class="font-display text-xl font-semibold text-white mb-4">Published Gallery Projects ({{ projects|length }})</h2>
-
-        {% if projects %}
-          <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {% for proj in projects %}
-              <div class="rounded-2xl border border-slate-800 bg-slate-950/80 p-4 flex flex-col justify-between gap-4">
-                <div>
-                  {% if proj.images %}
-                    <div class="grid grid-cols-2 gap-2 mb-3">
-                      {% for img in proj.images[:4] %}
-                        <img src="{{ img.url }}" alt="{{ proj.title }}" class="h-28 w-full rounded-lg object-cover bg-slate-900" onerror="this.style.display='none'" />
-                      {% endfor %}
-                    </div>
-                  {% endif %}
-                  <div class="flex items-start justify-between gap-2">
-                    <h3 class="font-semibold text-white">{{ proj.title }}</h3>
-                    <span class="shrink-0 rounded-full bg-slate-800 px-2.5 py-0.5 text-xs text-sky-300">
-                      {{ categories.get(proj.category, proj.category) }}
-                    </span>
-                  </div>
-                  {% if proj.description %}
-                    <p class="mt-1.5 text-xs text-slate-400">{{ proj.description }}</p>
-                  {% endif %}
-                  <p class="mt-2 text-xs text-slate-500">
-                    {{ (proj.images or [])|length }} photo(s) &bull;
-                    {{ (proj.videos or [])|length }} video(s) &bull;
-                    {{ (proj.before_after or [])|length }} before/after
-                  </p>
-                </div>
-
-                <div class="flex items-center gap-2">
-                  <a href="/project/{{ proj.id }}" target="_blank"
-                    class="flex-1 text-center rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-xs font-medium text-amber-300 hover:border-amber-400">
-                    Open Page
-                  </a>
-                  <button type="button"
-                    data-edit-project='{{ proj | tojson | forceescape }}'
-                    class="rounded-lg border border-sky-700/70 bg-sky-950/60 px-3 py-1.5 text-xs font-medium text-sky-200 hover:bg-sky-900">
-                    Edit
-                  </button>
-                  <form method="POST" action="/admin/gallery/{{ proj.id }}/delete" onsubmit="return confirm('Delete this project and its Google Drive media?');">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
-                    <button type="submit" class="rounded-lg border border-rose-800/80 bg-rose-950/50 px-3 py-1.5 text-xs font-medium text-rose-200 hover:bg-rose-900">
-                      Delete
-                    </button>
-                  </form>
-                </div>
-              </div>
-            {% endfor %}
-          </div>
-        {% else %}
-          <p class="text-sm text-slate-400">No gallery projects found yet.</p>
-        {% endif %}
-      </section>
-
-    {% elif tab == 'enquiries' %}
-      <section class="rounded-2xl border border-slate-800 bg-slate-900 p-6">
-        <div class="flex flex-wrap items-center justify-between gap-4 mb-5">
-          <h2 class="font-display text-xl font-semibold text-white">Customer Enquiries</h2>
-          <a href="/admin/enquiries/export.csv"
-            class="rounded-xl border border-slate-700 bg-slate-800 px-4 py-2 text-sm font-medium text-slate-200 hover:border-amber-400 hover:text-amber-300">
-            Export CSV
-          </a>
-        </div>
-
-        <form method="GET" action="/admin" class="mb-5 flex flex-wrap gap-3">
-          <input type="hidden" name="tab" value="enquiries" />
-          <input type="text" name="q" value="{{ search_q }}" placeholder="Search name, email, phone, subject..."
-            class="w-full sm:w-72 rounded-xl border border-slate-700 bg-slate-950 px-3.5 py-2 text-sm text-white focus:border-amber-400 focus:outline-none" />
-          <select name="status"
-            class="rounded-xl border border-slate-700 bg-slate-950 px-3.5 py-2 text-sm text-white focus:border-amber-400 focus:outline-none">
-            <option value="all" {% if status_filter == 'all' %}selected{% endif %}>All Statuses</option>
-            <option value="New" {% if status_filter == 'New' %}selected{% endif %}>New</option>
-            <option value="Contacted" {% if status_filter == 'Contacted' %}selected{% endif %}>Contacted</option>
-            <option value="Completed" {% if status_filter == 'Completed' %}selected{% endif %}>Completed</option>
-          </select>
-          <button type="submit" class="rounded-xl bg-amber-400 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-amber-300">
-            Filter
-          </button>
-        </form>
-
-        {% if enquiries %}
-          <div class="overflow-x-auto">
-            <table class="w-full text-left text-sm">
-              <thead class="border-b border-slate-800 text-xs uppercase text-slate-400">
-                <tr>
-                  <th class="py-3 pr-4">Submitted</th>
-                  <th class="py-3 pr-4">Customer</th>
-                  <th class="py-3 pr-4">Subject</th>
-                  <th class="py-3 pr-4">Message</th>
-                  <th class="py-3 pr-4">Status</th>
-                  <th class="py-3 text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-slate-800/80">
-                {% for enq in enquiries %}
-                  <tr class="align-top">
-                    <td class="py-3.5 pr-4 text-xs text-slate-400 whitespace-nowrap">{{ enq.submitted_at }}</td>
-                    <td class="py-3.5 pr-4">
-                      <div class="font-medium text-white">{{ enq.name }}</div>
-                      <div class="text-xs text-slate-400">{{ enq.email }}</div>
-                      <div class="text-xs text-slate-400">{{ enq.phone }}</div>
-                    </td>
-                    <td class="py-3.5 pr-4 text-slate-200">{{ enq.subject }}</td>
-                    <td class="py-3.5 pr-4 text-slate-300 max-w-md">{{ enq.message }}</td>
-                    <td class="py-3.5 pr-4 whitespace-nowrap">
-                      <form method="POST" action="/admin/enquiries/{{ enq.id }}/status" class="flex items-center gap-1.5">
-                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
-                        <select name="status" class="rounded-lg border border-slate-700 bg-slate-950 px-2 py-1 text-xs text-white">
-                          {% for st in ['New', 'Contacted', 'Completed'] %}
-                            <option value="{{ st }}" {% if (enq.status or 'New') == st %}selected{% endif %}>{{ st }}</option>
-                          {% endfor %}
-                        </select>
-                        <button type="submit" class="rounded-lg bg-slate-800 px-2.5 py-1 text-xs text-amber-300 hover:bg-slate-700">Save</button>
-                      </form>
-                    </td>
-                    <td class="py-3.5 text-right whitespace-nowrap">
-                      <form method="POST" action="/admin/enquiries/{{ enq.id }}/delete" onsubmit="return confirm('Delete this enquiry?');" class="inline">
-                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
-                        <button type="submit" class="rounded-lg bg-rose-950/70 px-2.5 py-1 text-xs text-rose-200 hover:bg-rose-900">Delete</button>
-                      </form>
-                    </td>
-                  </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        {% else %}
-          <p class="text-sm text-slate-400">No matching enquiries found.</p>
-        {% endif %}
-      </section>
-    {% endif %}
-  </main>
-
-  <!-- Edit Project Modal -->
-  <div id="editProjectModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/85 p-4 backdrop-blur-sm overflow-y-auto">
-    <div class="my-8 w-full max-w-2xl rounded-2xl border border-slate-800 bg-slate-900 p-6 space-y-5 max-h-[90vh] overflow-y-auto">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-        <h3 class="font-display text-lg font-bold text-white">Edit Project</h3>
-        <button id="closeEditModalBtn" type="button" class="rounded-lg bg-slate-800 px-3 py-1 text-sm text-slate-300 hover:bg-rose-900 hover:text-white">
-          Close &times;
-        </button>
+    <form method="POST" action="/admin/login" class="space-y-4">
+      <div>
+        <label for="username" class="block text-xs font-semibold uppercase tracking-wider text-muted mb-1.5">Username</label>
+        <input id="username" name="username" type="text" required autocomplete="username" class="w-full px-4 py-2.5 rounded-xl bg-bg border border-line text-base sm:text-sm focus:outline-none focus:border-accent">
       </div>
 
-      <form id="editProjectForm" method="POST" action="" enctype="multipart/form-data" class="space-y-4">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+      <div>
+        <label for="password" class="block text-xs font-semibold uppercase tracking-wider text-muted mb-1.5">Password</label>
+        <input id="password" name="password" type="password" required autocomplete="current-password" class="w-full px-4 py-2.5 rounded-xl bg-bg border border-line text-base sm:text-sm focus:outline-none focus:border-accent">
+      </div>
 
-        <div class="grid gap-4 sm:grid-cols-2">
-          <div>
-            <label for="editTitle" class="block text-xs font-medium text-slate-300">Project Title *</label>
-            <input id="editTitle" name="title" type="text" required
-              class="mt-1 w-full rounded-xl border border-slate-700 bg-slate-950 px-3.5 py-2 text-sm text-white focus:border-amber-400 focus:outline-none" />
-          </div>
+      <button type="submit" class="w-full py-3 rounded-full bg-accent hover:bg-accentDark text-onaccent font-bold text-sm transition shadow-sm">
+        Sign In
+      </button>
+    </form>
 
-          <div>
-            <label for="editCategory" class="block text-xs font-medium text-slate-300">Category *</label>
-            <select id="editCategory" name="category"
-              class="mt-1 w-full rounded-xl border border-slate-700 bg-slate-950 px-3.5 py-2 text-sm text-white focus:border-amber-400 focus:outline-none">
-              {% for key, label in categories.items() %}
-                <option value="{{ key }}">{{ label }}</option>
-              {% endfor %}
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <label for="editDescription" class="block text-xs font-medium text-slate-300">Description</label>
-          <textarea id="editDescription" name="description" rows="2"
-            class="mt-1 w-full rounded-xl border border-slate-700 bg-slate-950 px-3.5 py-2 text-sm text-white focus:border-amber-400 focus:outline-none"></textarea>
-        </div>
-
-        <!-- Existing Media Removal -->
-        <div id="editExistingMedia" class="space-y-3 rounded-xl border border-slate-800 bg-slate-950/70 p-3.5">
-          <p class="text-xs font-semibold text-slate-300">Existing Media (check to remove)</p>
-          <div id="editPhotosList" class="grid grid-cols-2 sm:grid-cols-3 gap-2"></div>
-          <div id="editVideosList" class="space-y-1.5 text-xs"></div>
-          <div id="editBaList" class="space-y-1.5 text-xs"></div>
-        </div>
-
-        <!-- Add More Photos -->
-        <div>
-          <label for="editNewImages" class="block text-xs font-medium text-amber-300">Add More Photos</label>
-          <input id="editNewImages" name="new_images" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" multiple
-            class="mt-1 w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-1.5 text-xs text-slate-300" />
-        </div>
-
-        <!-- Add More Videos -->
-        <div class="grid gap-3 sm:grid-cols-2">
-          <div>
-            <label for="editVideosInput" class="block text-xs font-medium text-sky-300">Add Video Files</label>
-            <input id="editVideosInput" name="edit_videos" type="file" accept=".mp4,.webm,.mov,video/mp4,video/webm,video/quicktime" multiple
-              class="mt-1 w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-1.5 text-xs text-slate-300" />
-          </div>
-          <div>
-            <label for="editVideoUrl" class="block text-xs font-medium text-sky-300">Or Add Video URL</label>
-            <input id="editVideoUrl" name="edit_video_url" type="url" placeholder="https://www.youtube.com/watch?v=..."
-              class="mt-1 w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-1.5 text-xs text-white" />
-          </div>
-        </div>
-        <div>
-          <label for="editVideoCaption" class="block text-xs font-medium text-slate-300">New Video Caption</label>
-          <input id="editVideoCaption" name="edit_video_caption" type="text" placeholder="Optional caption"
-            class="mt-1 w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-1.5 text-xs text-white" />
-        </div>
-
-        <!-- Add New Before / After Pair -->
-        <div class="rounded-xl border border-slate-800 bg-slate-950/70 p-3 space-y-2">
-          <p class="text-xs font-semibold text-emerald-300">Add Before &amp; After Pair</p>
-          <div class="grid gap-2 sm:grid-cols-3">
-            <div>
-              <label class="block text-[11px] text-slate-400">Before Image</label>
-              <input name="edit_ba_before" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-                class="mt-1 w-full text-xs text-slate-300" />
-            </div>
-            <div>
-              <label class="block text-[11px] text-slate-400">After Image</label>
-              <input name="edit_ba_after" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-                class="mt-1 w-full text-xs text-slate-300" />
-            </div>
-            <div>
-              <label class="block text-[11px] text-slate-400">Caption</label>
-              <input name="edit_ba_caption" type="text" placeholder="Optional"
-                class="mt-1 w-full rounded-lg border border-slate-700 bg-slate-900 px-2.5 py-1 text-xs text-white" />
-            </div>
-          </div>
-        </div>
-
-        <div class="flex justify-end gap-2 pt-2">
-          <button type="button" id="cancelEditBtn" class="rounded-xl border border-slate-700 bg-slate-800 px-4 py-2 text-xs font-medium text-slate-200 hover:bg-slate-700">
-            Cancel
-          </button>
-          <button type="submit" class="rounded-xl bg-amber-400 px-5 py-2 text-xs font-semibold text-slate-950 hover:bg-amber-300">
-            Save Changes
-          </button>
-        </div>
-      </form>
+    <div class="pt-2 border-t border-line flex items-center justify-between text-xs text-muted">
+      <a href="/" class="hover:text-ink transition">← Back to Website</a>
+      <span>WWEC Protected Area</span>
     </div>
   </div>
 
-  <script>
-    const imagesInput = document.getElementById("images");
-    const previewGrid = document.getElementById("previewGrid");
-    if (imagesInput && previewGrid) {
-      imagesInput.addEventListener("change", () => {
-        previewGrid.innerHTML = "";
-        const files = Array.from(imagesInput.files || []).slice(0, 10);
-        files.forEach((file) => {
-          const reader = new FileReader();
-          reader.onload = () => {
-            const card = document.createElement("div");
-            card.className = "rounded-xl border border-slate-800 bg-slate-950 p-2";
-            card.innerHTML = `<img src="${reader.result}" alt="${file.name}" class="h-24 w-full rounded-lg object-cover" /><p class="mt-1 truncate text-xs text-slate-400">${file.name}</p>`;
-            previewGrid.appendChild(card);
-          };
-          reader.readAsDataURL(file);
-        });
-      });
-    }
-
-    const addBaRowBtn = document.getElementById("addBaRowBtn");
-    const baRowsContainer = document.getElementById("baRowsContainer");
-    if (addBaRowBtn && baRowsContainer) {
-      addBaRowBtn.addEventListener("click", () => {
-        const row = document.createElement("div");
-        row.className = "ba-pair-row grid gap-3 rounded-xl border border-slate-800/90 bg-slate-900/80 p-3 md:grid-cols-3";
-        row.innerHTML = `
-          <div>
-            <label class="block text-xs text-slate-300">Before Image</label>
-            <input name="ba_before" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-              class="mt-1 w-full text-xs text-slate-300 file:mr-2 file:rounded file:border-0 file:bg-slate-700 file:px-2.5 file:py-1 file:text-xs file:text-white" />
-          </div>
-          <div>
-            <label class="block text-xs text-slate-300">After Image</label>
-            <input name="ba_after" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
-              class="mt-1 w-full text-xs text-slate-300 file:mr-2 file:rounded file:border-0 file:bg-emerald-500 file:px-2.5 file:py-1 file:text-xs file:font-semibold file:text-slate-950" />
-          </div>
-          <div>
-            <label class="block text-xs text-slate-300">Comparison Caption</label>
-            <input name="ba_caption" type="text"
-              class="mt-1 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-1.5 text-xs text-white focus:border-emerald-400 focus:outline-none"
-              placeholder="Optional caption" />
-          </div>
-        `;
-        baRowsContainer.appendChild(row);
-      });
-    }
-
-    const editModal = document.getElementById("editProjectModal");
-    const editForm = document.getElementById("editProjectForm");
-    const editTitle = document.getElementById("editTitle");
-    const editCategory = document.getElementById("editCategory");
-    const editDescription = document.getElementById("editDescription");
-    const editPhotosList = document.getElementById("editPhotosList");
-    const editVideosList = document.getElementById("editVideosList");
-    const editBaList = document.getElementById("editBaList");
-
-    function closeEditModal() {
-      editModal?.classList.add("hidden");
-      editModal?.classList.remove("flex");
-      editForm?.reset();
-    }
-
-    document.getElementById("closeEditModalBtn")?.addEventListener("click", closeEditModal);
-    document.getElementById("cancelEditBtn")?.addEventListener("click", closeEditModal);
-    editModal?.addEventListener("click", (e) => {
-      if (e.target === editModal) closeEditModal();
-    });
-
-    document.querySelectorAll("[data-edit-project]").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const proj = JSON.parse(btn.getAttribute("data-edit-project") || "{}");
-        editForm.action = `/admin/gallery/${encodeURIComponent(proj.id || "")}/edit`;
-        editTitle.value = proj.title || "";
-        editCategory.value = proj.category || "completed";
-        editDescription.value = proj.description || "";
-
-        editPhotosList.innerHTML = "";
-        editVideosList.innerHTML = "";
-        editBaList.innerHTML = "";
-
-        const photos = proj.photos || proj.images || [];
-        photos.forEach((p) => {
-          if (!p.file_id) return;
-          const item = document.createElement("label");
-          item.className = "flex items-center gap-2 rounded-lg border border-slate-800 bg-slate-900 p-1.5 text-xs text-slate-300 cursor-pointer";
-          item.innerHTML = `
-            <input type="checkbox" name="remove_photo_ids" value="${p.file_id}" class="rounded border-slate-600" />
-            <img src="${p.url}" alt="" class="h-9 w-9 rounded object-cover shrink-0" />
-            <span class="truncate">Photo</span>
-          `;
-          editPhotosList.appendChild(item);
-        });
-
-        const videos = proj.videos || [];
-        videos.forEach((v) => {
-          const vkey = v.file_id || v.url || "";
-          if (!vkey) return;
-          const item = document.createElement("label");
-          item.className = "flex items-center gap-2 rounded-lg border border-slate-800 bg-slate-900 px-2.5 py-1.5 text-slate-300 cursor-pointer";
-          item.innerHTML = `
-            <input type="checkbox" name="remove_video_keys" value="${vkey}" class="rounded border-slate-600" />
-            <span class="truncate">Remove video: ${v.caption || v.url}</span>
-          `;
-          editVideosList.appendChild(item);
-        });
-
-        const bas = proj.before_after || [];
-        bas.forEach((ba) => {
-          const bakey = `${ba.before_file_id || ""}|${ba.after_file_id || ""}|${ba.before_url || ""}`;
-          const item = document.createElement("label");
-          item.className = "flex items-center gap-2 rounded-lg border border-slate-800 bg-slate-900 px-2.5 py-1.5 text-slate-300 cursor-pointer";
-          item.innerHTML = `
-            <input type="checkbox" name="remove_ba_keys" value="${bakey}" class="rounded border-slate-600" />
-            <span class="truncate">Remove before/after: ${ba.caption || "Comparison pair"}</span>
-          `;
-          editBaList.appendChild(item);
-        });
-
-        editModal.classList.remove("hidden");
-        editModal.classList.add("flex");
-      });
-    });
-  </script>
+<script src="/main.js"></script>
 </body>
 </html>
