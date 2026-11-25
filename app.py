@@ -285,7 +285,7 @@ PHONE_RE = re.compile(r"^[0-9+()\-\s]{7,20}$")
 
 
 @app.post("/api/contact")
-@app.post("/contact"
+@app.post("/contact")
 def api_contact():
     data = request.get_json(silent=True) or {}
 
