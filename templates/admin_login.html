@@ -12,18 +12,18 @@
   } catch (e) {}
 </script>
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="tw-config.js"></script>
+<script src="/tw-config.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="/style.css">
 </head>
 <body class="font-sans bg-bg text-ink antialiased min-h-screen flex items-center justify-center px-4 py-8 sm:py-12">
 
   <div class="w-full max-w-md bg-surface border border-line rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
     <div class="flex items-center justify-between gap-2">
-      <a href="index.html" class="flex items-center gap-2.5 min-w-0">
-        <img src="pictures/logo.png" alt="WWEC logo" class="h-9 w-auto object-contain shrink-0" onerror="this.style.display='none'">
+      <a href="/" class="flex items-center gap-2.5 min-w-0">
+        <img src="/pictures/logo.png" alt="WWEC logo" class="h-9 w-auto object-contain shrink-0" onerror="this.style.display='none'">
         <span class="font-display font-bold text-lg tracking-tight truncate">WWEC Admin</span>
       </a>
       <button id="theme-toggle" type="button" aria-label="Toggle dark mode" class="w-10 h-10 rounded-full border border-line flex items-center justify-center text-ink hover:border-accent transition shrink-0">
@@ -36,6 +36,12 @@
       <h1 class="font-display text-2xl font-bold">Sign in to Dashboard</h1>
       <p class="text-sm text-muted mt-1">Manage construction projects, developments, and gallery photos.</p>
     </div>
+
+    {% if error %}
+      <div role="alert" class="px-4 py-3 rounded-2xl border text-xs font-medium bg-red-500/10 border-red-500/30 text-red-700 dark:text-red-300">
+        {{ error }}
+      </div>
+    {% endif %}
 
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
@@ -66,11 +72,11 @@
     </form>
 
     <div class="pt-2 border-t border-line flex items-center justify-between text-xs text-muted">
-      <a href="index.html" class="hover:text-ink transition">← Back to Website</a>
+      <a href="/" class="hover:text-ink transition">← Back to Website</a>
       <span>WWEC Protected Area</span>
     </div>
   </div>
 
-<script src="main.js"></script>
+<script src="/main.js"></script>
 </body>
 </html>
